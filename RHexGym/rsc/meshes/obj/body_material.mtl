@@ -1,0 +1,17 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl black
+  Ka 0.000 0.000 0.000
+  Kd 1.000 1.000 1.000
+  Ks 0.000 0.000 0.000
+  Ns 10.000
+  Ni 10.000
+  d  1
+  illum 2
+
+  map_Ka black.png
+  map_Kd black.png
+  map_Ks black.png
+  map_Ns black.png
+  map_Ni black.png

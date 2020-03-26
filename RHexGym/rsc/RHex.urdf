@@ -1,0 +1,942 @@
+<?xml version="1.0"?>
+  <robot name="RHex">
+
+    <link name="link_body">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="8.0"/>
+        <inertia ixx="0.000110" ixy="0" ixz="0" iyy="0.000516" iyz="0" izz="0.000606"/>
+      </inertial>
+      <visual name="visual_body">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/mesh_body.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_body">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.50 0.23 0.10"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg1Upper">
+      <inertial>
+        <origin xyz="0.0 0.0 -0.02" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg1Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg1Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg2Upper">
+      <inertial>
+        <origin xyz="-0.00414 -0.05547 -0.0001" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg2Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg2Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg3Upper">
+      <inertial>
+        <origin xyz="-0.00579 -0.04779 -0.0001" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg3Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg3Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg4Upper">
+      <inertial>
+        <origin xyz="0.00364 -0.0587 -0.0001" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg4Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg4Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg5Upper">
+      <inertial>
+        <origin xyz="-0.01428 -0.0677 -0.0001" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg5Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg5Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg6Upper">
+      <inertial>
+        <origin xyz="-0.03331 -0.08349 -0.0001" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.002804" ixy="0.0" ixz="-0.002497" iyy="0.005951" iyz="0" izz="0.003613"/>
+      </inertial>
+      <visual name="visual_leg6Upper">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegUpper.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg6Upper1">
+        <origin xyz="-0.0756 0.0 -0.0898" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper2">
+        <origin xyz="-0.0754 0.0 -0.0744" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper3">
+        <origin xyz="-0.0731 0.0 -0.0593" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper4">
+        <origin xyz="-0.0683 0.0 -0.0448" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper5">
+        <origin xyz="-0.0605 0.0 -0.0317" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper6">
+        <origin xyz="-0.0510 0.0 -0.0189" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper7">
+        <origin xyz="-0.0403 0.0 -0.0088" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper8">
+        <origin xyz="-0.0239 0.0 -0.0001" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Upper9">
+        <origin xyz="0.0015 0.0 0.0040" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.015"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint1" type="revolute">
+      <origin xyz="0.25 0.15 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg1Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <joint name="joint2" type="revolute">
+      <origin xyz="0 0.20 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg2Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <joint name="joint3" type="revolute">
+      <origin xyz="-0.25 0.15 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg3Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <joint name="joint4" type="revolute">
+      <origin xyz="-0.25 -0.15 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg4Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <joint name="joint5" type="revolute">
+      <origin xyz="0 -0.20 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg5Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <joint name="joint6" type="revolute">
+      <origin xyz="0.25 -0.15 0" rpy="0 0 0"/>
+      <parent link="link_body"/>
+      <child link="link_leg6Upper"/>
+      <axis xyz="0 -1 0"/>
+      <limit  effort="20" velocity="25"/>
+    </joint>
+
+    <link name="link_leg1Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg1Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg1Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg1Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg2Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg2Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg2Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg2Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg3Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg3Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg3Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg3Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg4Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg4Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg4Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg4Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg5Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg5Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg5Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg5Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_leg6Lower">
+      <inertial>
+        <origin xyz="-0.00261 -0.02874 -0.0001" rpy="0 0 0"/>
+        <mass value="0.050"/>
+        <inertia ixx="0.000892" ixy="0.000855" ixz="0" iyy="0.001118" iyz="0" izz="0.001855"/>
+      </inertial>
+      <visual name="visual_leg6Lower">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="./meshes/obj/RHexLegLower.obj" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </visual>
+      <collision name="collision_leg6Lower1">
+        <origin xyz="0.095 0.0 -0.085" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0050"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower2">
+        <origin xyz="0.08468 0.0 -0.08254" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower3">
+        <origin xyz="0.06998 0.0 -0.07874" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower4">
+        <origin xyz="0.05660 0.0 -0.07359" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower5">
+        <origin xyz="0.04344 0.0 -0.06553" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower6">
+        <origin xyz="0.03148 0.0 -0.05552" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower7">
+        <origin xyz="0.02374 0.0 -0.04531" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower8">
+        <origin xyz="0.01599 0.0 -0.03279" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+      <collision name="collision_leg6Lower9">
+        <origin xyz="0.01117 0.0 -0.01897" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="Leg1Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg1Upper"/>
+      <child link="link_leg1Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+    <joint name="Leg2Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg2Upper"/>
+      <child link="link_leg2Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+    <joint name="Leg3Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg3Upper"/>
+      <child link="link_leg3Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+    <joint name="Leg4Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg4Upper"/>
+      <child link="link_leg4Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+    <joint name="Leg5Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg5Upper"/>
+      <child link="link_leg5Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+    <joint name="Leg6Joint" type="revolute">
+      <origin xyz="-0.080 0.0 -0.099" rpy="0 0 0"/>
+      <parent link="link_leg6Upper"/>
+      <child link="link_leg6Lower"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="0.0" lower="-0.2" upper="0.2" velocity="0.0"/>
+      <dynamics damping="10.0" stiffness="100"/>
+    </joint>
+
+  </robot>
