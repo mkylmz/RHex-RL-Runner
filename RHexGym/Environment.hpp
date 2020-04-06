@@ -40,6 +40,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(nJoints_));
 
     /// set pd gains
+    pTarget_.setZero(gcDim_); vTarget_.setZero(gvDim_);
     Eigen::VectorXd jointPgain(gvDim_), jointDgain(gvDim_);
     //jointPgain.setZero(); jointPgain.tail(nJoints_).setConstant(40.0);
     //jointDgain.setZero(); jointDgain.tail(nJoints_).setConstant(1.0);
@@ -50,6 +51,8 @@ class ENVIRONMENT : public RaisimGymEnv {
     }
     rhex_->setPdGains(jointPgain, jointDgain);
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(gvDim_));
+
+    gc_init_[2] = 0.4;
 
      /* Convention
       *
@@ -78,7 +81,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     obStd_ << 0.05, /// average height
         Eigen::VectorXd::Constant(3, 2.0), /// linear velocity
         Eigen::VectorXd::Constant(6, 4.0), /// angular velocities
-        Eigen::VectorXd::Constant(3, 1.0 / 1.0), /// joint angles
+        Eigen::VectorXd::Constant(3, 0.0), /// joint angles
         Eigen::VectorXd::Constant(6, 10.0); /// joint velocities
 
     /// Reward coefficients
@@ -91,6 +94,7 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     /// visualize if it is the first environment
     if (visualizable_) {
+      cout<<"Visualization initializing..."<<endl;
       auto vis = raisim::OgreVis::get();
 
       /// these method must be called before initApp
@@ -109,7 +113,9 @@ class ENVIRONMENT : public RaisimGymEnv {
       vis->createGraphicalObject(ground, 20, "floor", "checkerboard_green");
       desired_fps_ = 60.;
       vis->setDesiredFPS(desired_fps_);
+      cout<<"Visualization initialized."<<endl;
     }
+    cout<<"Created Environment."<<endl;
   }
 
   ~ENVIRONMENT() final = default;
@@ -133,7 +139,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     //pTarget_.tail(nJoints_) = pTarget6_;
     for (uint i=0; i<6; i++)
     {
-      pTarget_[6+2*i] = pTarget6_[i]; 
+      pTarget_[7+2*i] = pTarget6_[i];
     }
 
     rhex_->setPdTarget(pTarget_, vTarget_);
