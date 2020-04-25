@@ -4,6 +4,7 @@
 #include <raisim/OgreVis.hpp>
 #include "RaisimGymEnv.hpp"
 #include "visSetupCallback.hpp"
+#include <math.h>
 
 #include "visualizer/raisimKeyboardCallback.hpp"
 #include "visualizer/helper.hpp"
@@ -26,33 +27,26 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     /// add objects
     cout<<resourceDir<<endl;
-    rhex_ = world_->addArticulatedSystem(resourceDir+"/RHex.urdf");
+    rhex_ = world_->addArticulatedSystem(resourceDir+"/urdf/RHex.urdf");
     rhex_->setControlMode(raisim::ControlMode::FORCE_AND_TORQUE);
     auto ground = world_->addGround();
-    world_->setERP(0,0);
+    world_->setTimeStep(simulation_dt_);
+    world_->setERP(simulation_dt_,simulation_dt_);
     /// get robot data
     gcDim_ = rhex_->getGeneralizedCoordinateDim(); // will be six; joint angles
     gvDim_ = rhex_->getDOF(); // will be six; angular velocity of joints.
     nJoints_ = 6;
     /// initialize containers
-    gc_.setZero(gcDim_); gc_init_.setZero(gcDim_);
-    gv_.setZero(gvDim_); gv_init_.setZero(gvDim_);
+    gc_.setZero(gcDim_);
+    gv_.setZero(gvDim_);
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(nJoints_));
 
     /// set pd gains
     pTarget_.setZero(gcDim_); vTarget_.setZero(gvDim_);
-    Eigen::VectorXd jointPgain(gvDim_), jointDgain(gvDim_);
-    //jointPgain.setZero(); jointPgain.tail(nJoints_).setConstant(40.0);
-    //jointDgain.setZero(); jointDgain.tail(nJoints_).setConstant(1.0);
-    for (uint i=0; i<6; i++)
-    {
-      jointPgain[6+2*i] = 40.0;
-      jointDgain[6+2*i] = 1.0;
-    }
-    rhex_->setPdGains(jointPgain, jointDgain);
+    jointPgain.setZero(nJoints_); jointPgain.setConstant(24.0);
+    jointDgain.setZero(nJoints_); jointDgain.setConstant(2.1);
+    target_torques.setZero(gvDim_);
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(gvDim_));
-
-    gc_init_[2] = 0.4;
 
      /* Convention
       *
@@ -70,19 +64,19 @@ class ENVIRONMENT : public RaisimGymEnv {
     obMean_.setZero(obDim_); obStd_.setZero(obDim_);
 
     /// action & observation scaling
-    actionMean_ = gc_init_.tail(nJoints_);
+    actionMean_ = Eigen::VectorXd::Constant(6, 0.0);
     actionStd_.setConstant(0.6);
 
     obMean_ << 0.26, /// average height 1
         Eigen::VectorXd::Constant(6, 0.0), /// body lin/ang vel 6
-        gc_init_.tail(6), /// joint position 6
+        Eigen::VectorXd::Constant(6, 0.0), /// joint position 6
         Eigen::VectorXd::Constant(6, 0.0); /// joint vel history 6
 
-    obStd_ << 0.05, /// average height
-        Eigen::VectorXd::Constant(3, 2.0), /// linear velocity
-        Eigen::VectorXd::Constant(6, 4.0), /// angular velocities
-        Eigen::VectorXd::Constant(3, 0.0), /// joint angles
-        Eigen::VectorXd::Constant(6, 10.0); /// joint velocities
+    obStd_ << 1.0, /// average height
+        Eigen::VectorXd::Constant(3, 1.0), /// linear velocity
+        Eigen::VectorXd::Constant(3, 1.0), /// angular velocities
+        Eigen::VectorXd::Constant(6, 1.0), /// joint angles
+        Eigen::VectorXd::Constant(6, 1.0); /// joint velocities
 
     /// Reward coefficients
     READ_YAML(double, forwardVelRewardCoeff_, cfg["forwardVelRewardCoeff"])
@@ -124,7 +118,18 @@ class ENVIRONMENT : public RaisimGymEnv {
   void init() final { }
 
   void reset() final {
-    rhex_->setState(gc_init_, gv_init_);
+    //rhex_->setState(gc_init_, gv_init_);
+    raisim::Vec<3UL> pos; pos[2] = 0.5;
+    rhex_->setBasePos(pos);
+    raisim::Vec<3> ori_vec; ori_vec[0] = 0; ori_vec[1] = 0; ori_vec[2] = 0;
+    raisim::Vec<4> quat;
+    eulerVecToQuat(ori_vec, quat);
+    raisim::Mat<3UL, 3UL> rot;
+    quatToRotMat(quat,rot);
+    rhex_->setBaseOrientation( rot );
+    auto force = rhex_->getGeneralizedForce();
+    force.setZero();
+    rhex_->setGeneralizedForce(force);
     updateObservation();
     if(visualizable_)
       gui::rewardLogger.clean();
@@ -136,17 +141,41 @@ class ENVIRONMENT : public RaisimGymEnv {
     pTarget6_ = pTarget6_.cwiseProduct(actionStd_);
     pTarget6_ += actionMean_;
 
-    //pTarget_.tail(nJoints_) = pTarget6_;
-    for (uint i=0; i<6; i++)
-    {
-      pTarget_[7+2*i] = pTarget6_[i];
-    }
-
-    rhex_->setPdTarget(pTarget_, vTarget_);
+    //rhex_->setPdTarget(pTarget_, vTarget_);
     auto loopCount = int(control_dt_ / simulation_dt_ + 1e-10);
     auto visDecimation = int(1. / (desired_fps_ * simulation_dt_) + 1e-10);
 
     for(int i=0; i<loopCount; i++) {
+      
+      gc_ = rhex_->getGeneralizedCoordinate();
+      gv_ = rhex_->getGeneralizedVelocity();
+      for (uint j=0; j<6; j++)
+      {
+        float poserr   = pTarget6_[j] - gc_[7+2*j];
+        float speederr = -gv_[6+2*j];
+        
+        // The allowable error range is determined by the error offset
+        // parameter: range = [-PI+offset,PI+offset].
+        if ( poserr <= - M_PI - M_PI/2+M_PI/36 ) poserr += 2*M_PI;
+        if ( poserr > M_PI - M_PI/2+M_PI/36 ) poserr -= 2*M_PI;
+
+        // Compute torque command
+        float hipCommTorque = ( jointPgain[j] * poserr + jointDgain[j] * speederr );
+        if (hipCommTorque > 20.0)
+        {
+          target_torques[6+2*j] = 20.0;
+          hipCommTorque = 20.0;
+        }
+        else if (hipCommTorque < -20.0)
+        {
+          target_torques[6+2*j] = -20.0;
+          hipCommTorque = -20.0;
+        }
+        else
+          target_torques[6+2*j] = hipCommTorque;
+      }
+      rhex_->setGeneralizedForce(target_torques);
+
       world_->integrate();
 
       if (visualizable_ && visualizeThisStep_ && visualizationCounter_ % visDecimation == 0)
@@ -180,7 +209,9 @@ class ENVIRONMENT : public RaisimGymEnv {
   }
 
   void updateObservation() {
-    rhex_->getState(gc_, gv_);
+    //rhex_->getState(gc_, gv_);
+    gc_ = rhex_->getGeneralizedCoordinate();
+    gv_ = rhex_->getGeneralizedVelocity();
     obDouble_.setZero(obDim_); obScaled_.setZero(obDim_);
 
     /// body height
@@ -194,8 +225,8 @@ class ENVIRONMENT : public RaisimGymEnv {
     //obDouble_.segment(1, 3) = rot.e().row(2);
 
     /// body velocities
-    bodyLinearVel_ = rot.e().transpose() * gv_.segment(0, 3);
-    bodyAngularVel_ = rot.e().transpose() * gv_.segment(3, 3);
+    bodyLinearVel_[0] = gv_[0];  bodyLinearVel_[1] = gv_[1];  bodyLinearVel_[2] = gv_[2];
+    bodyAngularVel_[0] = gv_[3];  bodyAngularVel_[1] = gv_[4];  bodyAngularVel_[2] = gv_[5];
     obDouble_.segment(1, 3) = bodyLinearVel_;
     obDouble_.segment(4, 3) = bodyAngularVel_;
 
@@ -241,7 +272,9 @@ class ENVIRONMENT : public RaisimGymEnv {
     std::normal_distribution<double> distribution_;
     raisim::ArticulatedSystem* rhex_;
     std::vector<GraphicObject> * rhexVisual_;
-    Eigen::VectorXd gc_init_, gv_init_, gc_, gv_, pTarget_, pTarget6_, vTarget_, torque_;
+    Eigen::VectorXd pTarget_, pTarget6_, vTarget_, torque_;
+    raisim::VecDyn gc_, gv_;
+    Eigen::VectorXd jointPgain, jointDgain, target_torques;
     double terminalRewardCoeff_ = -10.;
     double forwardVelRewardCoeff_ = 0., forwardVelReward_ = 0.;
     double torqueRewardCoeff_ = 0., torqueReward_ = 0.;
