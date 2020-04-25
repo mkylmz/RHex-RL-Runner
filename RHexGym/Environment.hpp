@@ -65,12 +65,12 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     /// action & observation scaling
     actionMean_ = Eigen::VectorXd::Constant(6, 0.0);
-    actionStd_.setConstant(0.6);
+    actionStd_.setConstant(1.57);
 
     obMean_ << 0.26, /// average height 1
         Eigen::VectorXd::Constant(6, 0.0), /// body lin/ang vel 6
         Eigen::VectorXd::Constant(6, 0.0), /// joint position 6
-        Eigen::VectorXd::Constant(6, 0.0); /// joint vel history 6
+        Eigen::VectorXd::Constant(6, 5.0); /// joint vel history 6
 
     obStd_ << 1.0, /// average height
         Eigen::VectorXd::Constant(3, 1.0), /// linear velocity
@@ -84,7 +84,18 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     gui::rewardLogger.init({"forwardVelReward", "torqueReward"});
 
-    footIndices_.insert(rhex_->getBodyIdx("link_body"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg1Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg2Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg3Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg4Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg5Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg6Upper"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg1Lower"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg2Lower"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg3Lower"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg4Lower"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg5Lower"));
+    footIndices_.insert(rhex_->getBodyIdx("link_leg6Lower"));
 
     /// visualize if it is the first environment
     if (visualizable_) {
