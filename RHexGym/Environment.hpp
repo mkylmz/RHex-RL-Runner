@@ -32,18 +32,19 @@ class ENVIRONMENT : public RaisimGymEnv {
     auto ground = world_->addGround();
     world_->setTimeStep(simulation_dt_);
     world_->setERP(simulation_dt_,simulation_dt_);
+    world_->setDefaultMaterial(10.0, 0.0, 0.0);
     /// get robot data
     gcDim_ = rhex_->getGeneralizedCoordinateDim(); // will be six; joint angles
     gvDim_ = rhex_->getDOF(); // will be six; angular velocity of joints.
     nJoints_ = 6;
     /// initialize containers
-    gc_.setZero(gcDim_); gc_init_.setZero(gcDim_); gc_init_[2]=0.3; gc_init_[3]=1.0; gc_init_[7] = 3.14; gc_init_[11] = 3.14; gc_init_[15] = 3.14;
+    gc_.setZero(gcDim_); gc_init_.setZero(gcDim_); gc_init_[2]=0.25; gc_init_[3]=1.0; gc_init_[7] = 3.14; gc_init_[11] = 3.14; gc_init_[15] = 3.14;
     gv_.setZero(gvDim_); gv_init_.setZero(gvDim_);
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(nJoints_));
 
     /// set pd gains
     pTarget_.setZero(gcDim_); vTarget_.setZero(gvDim_);
-    jointPgain.setZero(nJoints_); jointPgain.setConstant(24.0);
+    jointPgain.setZero(nJoints_); jointPgain.setConstant(40.0);
     jointDgain.setZero(nJoints_); jointDgain.setConstant(2.1);
     target_torques.setZero(gvDim_);
     rhex_->setGeneralizedForce(Eigen::VectorXd::Zero(gvDim_));
@@ -64,14 +65,19 @@ class ENVIRONMENT : public RaisimGymEnv {
     obMean_.setZero(obDim_); obStd_.setZero(obDim_);
 
     /// action & observation scaling
-    actionMean_ = Eigen::VectorXd::Constant(6, -1.0);
+    actionMean_ = Eigen::VectorXd::Constant(6, -0.8);
     actionStd_.setConstant(0.7);
 
     obMean_ << 0.26, /// average height 1
-        Eigen::VectorXd::Constant(1, 5.0), /// body lin x vel 1
+        Eigen::VectorXd::Constant(1, 1.0), /// body lin x vel 1
         Eigen::VectorXd::Constant(5, 0.0), /// body lin/ang vel 5
-        Eigen::VectorXd::Constant(6, 0.0), /// joint position 6
-        Eigen::VectorXd::Constant(6, 20.0); /// joint vel history 6
+        Eigen::VectorXd::Constant(1, 0.0), /// joint position 1
+        Eigen::VectorXd::Constant(1, 3.14),/// joint position 1
+        Eigen::VectorXd::Constant(1, 0.0), /// joint position 1
+        Eigen::VectorXd::Constant(1, 3.14),/// joint position 1
+        Eigen::VectorXd::Constant(1, 0.0), /// joint position 1
+        Eigen::VectorXd::Constant(1, 3.14),/// joint position 1
+        Eigen::VectorXd::Constant(6, 20.0);/// joint vel history 6
 
     obStd_ << 1.0, /// average height
         Eigen::VectorXd::Constant(3, 1.0), /// linear velocity
@@ -131,21 +137,6 @@ class ENVIRONMENT : public RaisimGymEnv {
 
   void reset() final {
     rhex_->setState(gc_init_, gv_init_);
-    /*raisim::Vec<3UL> pos; pos[2] = 0.3;
-    rhex_->setBasePos(pos);
-    raisim::Vec<3> ori_vec; ori_vec[0] = 0; ori_vec[1] = 0; ori_vec[2] = 0;
-    raisim::Vec<4> quat;
-    eulerVecToQuat(ori_vec, quat);
-    raisim::Mat<3UL, 3UL> rot;
-    quatToRotMat(quat,rot);
-    rhex_->setBaseOrientation( rot );
-    auto joint_vel = rhex_->getGeneralizedVelocity();
-    joint_vel.setZero();
-    rhex_->setGeneralizedVelocity(joint_vel);
-    auto joint_pos = rhex_->getGeneralizedCoordinate();
-    for (uint j=0; j<6; j++)
-      joint_pos[7+2*j] = 0;
-    rhex_->setGeneralizedCoordinate(joint_pos);*/
     auto force = rhex_->getGeneralizedForce();
     force.setZero();
     rhex_->setGeneralizedForce(force);
