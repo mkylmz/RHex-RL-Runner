@@ -59,10 +59,11 @@ class ENVIRONMENT : public RaisimGymEnv {
       */
 
     /// MUST BE DONE FOR ALL ENVIRONMENTS
-    obDim_ = 19; /// convention described above
+    obDim_ = 20; /// convention described above
     actionDim_ = nJoints_;
     actionMean_.setZero(actionDim_); actionStd_.setZero(actionDim_);
     obMean_.setZero(obDim_); obStd_.setZero(obDim_);
+    time_passed = 0.;
 
     /// action & observation scaling
     actionMean_ = Eigen::VectorXd::Constant(6, -0.8);
@@ -77,13 +78,15 @@ class ENVIRONMENT : public RaisimGymEnv {
         Eigen::VectorXd::Constant(1, 3.14),/// joint position 1
         Eigen::VectorXd::Constant(1, 0.0), /// joint position 1
         Eigen::VectorXd::Constant(1, 3.14),/// joint position 1
-        Eigen::VectorXd::Constant(6, 20.0);/// joint vel history 6
+        Eigen::VectorXd::Constant(6, 20.0),/// joint vel history 6
+        Eigen::VectorXd::Constant(1, 0.0); /// time phase 1
 
     obStd_ << 1.0, /// average height
         Eigen::VectorXd::Constant(3, 1.0), /// linear velocity
         Eigen::VectorXd::Constant(3, 1.0), /// angular velocities
         Eigen::VectorXd::Constant(6, 1.0), /// joint angles
-        Eigen::VectorXd::Constant(6, 1.0); /// joint velocities
+        Eigen::VectorXd::Constant(6, 1.0), /// joint velocities
+        Eigen::VectorXd::Constant(1, 1.0); /// time phase
 
     /// Reward coefficients
     READ_YAML(double, forwardVelRewardCoeff_, cfg["forwardVelRewardCoeff"])
@@ -140,7 +143,8 @@ class ENVIRONMENT : public RaisimGymEnv {
     auto force = rhex_->getGeneralizedForce();
     force.setZero();
     rhex_->setGeneralizedForce(force);
-    
+    world_start_time = world_->getWorldTime();
+    time_passed = 0.;
     
     updateObservation();
     if(visualizable_)
@@ -249,6 +253,11 @@ class ENVIRONMENT : public RaisimGymEnv {
       obDouble_[13+i] = gv_[6+2*i];
     }
 
+    // Time phase
+    time_passed = world_->getWorldTime() - world_start_time;
+    obDouble_[19] = fmod(time_passed,0.3);
+    //printf("Phase: %f, world time: %f, start_time: %f\n", obDouble_[19],  world_->getWorldTime(), world_start_time);
+
     obScaled_ = (obDouble_-obMean_).cwiseQuotient(obStd_);
   }
 
@@ -291,6 +300,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     double forwardVelRewardCoeff_ = 0., forwardVelReward_ = 0.;
     double torqueRewardCoeff_ = 0., torqueReward_ = 0.;
     double desired_fps_ = 60.;
+    double time_passed = 0., world_start_time = 0.;
     int visualizationCounter_=0;
     Eigen::VectorXd actionMean_, actionStd_, obMean_, obStd_;
     Eigen::VectorXd obDouble_, obScaled_;
